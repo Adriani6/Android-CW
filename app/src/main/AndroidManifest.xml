@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Main" />
+
         <activity android:name=".Home" android:label="@string/HomeLabel"></activity>
         <activity            android:name=".Edit"            android:label="@string/EditLabel"></activity>
         <activity            android:name=".Messages"            android:label="@string/MessagesLabel"></activity>
