@@ -16,18 +16,16 @@ public class MainActivity extends Activity {
     /**
      * Called when the activity is first created.
      */
-    private MainActivity instance;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        instance = this;
-        System.out.println("Initializing");
+        MainActivity instance = this;
+
         File dbFile = new File(getApplicationContext().getDatabasePath("sandwich.db").toString());
-        //dbFile.delete();
-        System.out.println(dbFile.exists());
+        dbFile.delete();
 
         if(!dbFile.exists())
         {

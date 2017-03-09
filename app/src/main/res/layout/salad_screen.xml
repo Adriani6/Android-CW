@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Your Salad"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+    <ScrollView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layoutContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/checkbox_lettuce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lettuce" />
+
+            <CheckBox
+                android:id="@+id/checkbox_onion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Onion" />
+
+            <CheckBox
+                android:id="@+id/checkbox_pepper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pepper" />
+
+            <CheckBox
+                android:id="@+id/checkbox_pickles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pickles" />
+
+            <Button
+                android:id="@+id/salads_nextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Next" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

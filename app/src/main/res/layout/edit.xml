@@ -3,9 +3,35 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:text="Bread:" />
+
+    <TextView
+        android:id="@+id/edit_breadType"
+        android:layout_width="259dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Meat:" />
+
+    <TextView
+        android:id="@+id/edit_meatType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/edit_save_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Button" />
+
 </LinearLayout>

@@ -21,80 +21,81 @@
             android:orientation="vertical">
 
             <RadioGroup
+                android:id="@+id/meatGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.08">
 
                 <RadioButton
-                    android:text="Ham"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/radioButton2"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:text="Roast Chicken"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/radioButton5"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:text="Cheese"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radioButton"
                     android:layout_weight="1"
-                    android:duplicateParentState="false" />
+                    android:text="Ham" />
 
                 <RadioButton
-                    android:text="Pineapple"
+                    android:id="@+id/radioButton5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Roast Chicken" />
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:duplicateParentState="false"
+                    android:text="Cheese" />
+
+                <RadioButton
                     android:id="@+id/radioButton3"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:text="Turkey Breast"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Pineapple" />
+
+                <RadioButton
                     android:id="@+id/radioButton4"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:text="Pepperoni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Turkey Breast" />
+
+                <RadioButton
                     android:id="@+id/radioButton6"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:text="Roast Beef"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Pepperoni" />
+
+                <RadioButton
                     android:id="@+id/radioButton9"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:text="Chorizo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Roast Beef" />
+
+                <RadioButton
                     android:id="@+id/radioButton8"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:text="Meatloaf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Chorizo" />
+
+                <RadioButton
                     android:id="@+id/radioButton7"
-                    android:layout_weight="1" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Meatloaf" />
 
                 <Button
-                    android:text="Next"
+                    android:id="@+id/meat_next_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/meat_next_button"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="Next" />
             </RadioGroup>
         </LinearLayout>
     </ScrollView>
