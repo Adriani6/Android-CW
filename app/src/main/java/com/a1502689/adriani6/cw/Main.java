@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 public class Main extends ActivityGroup {
 
+    private TabHost tabHost;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +25,8 @@ public class Main extends ActivityGroup {
     }
 
     private void initializeTabs() {
-        TabHost tabHost = (TabHost) findViewById(android.R.id.tabhost); // initiate TabHost
+        this.tabHost = (TabHost) findViewById(android.R.id.tabhost); // initiate TabHost
+
         tabHost.setup(this.getLocalActivityManager());
 
         TabHost.TabSpec spec; // Reusable TabSpec for each tab
@@ -62,6 +65,5 @@ public class Main extends ActivityGroup {
         });
     }
 
-
-
+    public TabHost getMyTabHost() { return tabHost; }
 }

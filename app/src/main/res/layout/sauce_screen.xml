@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sauces_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <CheckBox
+        android:id="@+id/checkbox_mayo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mayo" />
+
+    <CheckBox
+        android:id="@+id/checkbox_ketchup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ketchup" />
+
+    <CheckBox
+        android:id="@+id/checkbox_barbecue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Barbecue" />
+
+    <CheckBox
+        android:id="@+id/checkbox_chilli"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chilli" />
+
+    <CheckBox
+        android:id="@+id/checkbox_brown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Brown" />
+
+    <CheckBox
+        android:id="@+id/checkbox_cesar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cesar" />
+
+    <Button
+        android:id="@+id/showMatchesBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Matchess" />
+</LinearLayout>

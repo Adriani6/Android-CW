@@ -45,6 +45,30 @@
                 android:layout_height="wrap_content"
                 android:text="Pickles" />
 
+            <CheckBox
+                android:id="@+id/checkbox_tomato"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tomato" />
+
+            <CheckBox
+                android:id="@+id/checkbox_cucumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cucumber" />
+
+            <CheckBox
+                android:id="@+id/checkbox_olives"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Olives" />
+
+            <CheckBox
+                android:id="@+id/checkbox_carrot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Carrot" />
+
             <Button
                 android:id="@+id/salads_nextButton"
                 android:layout_width="match_parent"
