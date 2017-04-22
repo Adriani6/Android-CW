@@ -63,7 +63,11 @@ public class Edit extends Activity {
             @Override
             public void onClick(View v) {
                 File dbFile = new File(getApplicationContext().getDatabasePath("sandwich.db").toString());
+                File dbMatchesFile = new File(getApplicationContext().getDatabasePath("sandwichMatches.db").toString());
+
                 dbFile.delete();
+                dbMatchesFile.delete();
+
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });

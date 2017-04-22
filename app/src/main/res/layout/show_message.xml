@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+    android:layout_height="fill_parent"
+    android:layout_alignParentBottom="true"
+>
 
     <Button
         android:id="@+id/show_messsage_back_button"
@@ -17,18 +18,32 @@
         android:layout_height="321dp"
         android:layout_weight="0.61" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="71dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:theme="@style/Animation.AppCompat.Dialog" />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="72dp"
+        android:layout_alignParentBottom="true">
 
-    <Button
-        android:id="@+id/sendReplyBtn"
-        android:layout_width="227dp"
-        android:layout_height="wrap_content"
-        android:text="Send Reply" />
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="71dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/sendReplyBtn"
+            android:layout_toStartOf="@+id/sendReplyBtn"
+            android:inputType="textPersonName"
+            android:theme="@style/Animation.AppCompat.Dialog" />
+
+        <Button
+            android:id="@+id/sendReplyBtn"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:text="Send Reply" />
+    </RelativeLayout>
+
 </LinearLayout>

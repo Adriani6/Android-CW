@@ -1,15 +1,23 @@
 package com.a1502689.adriani6.cw;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Adriani6 on 3/7/2017.
@@ -17,12 +25,33 @@ import org.json.JSONArray;
 
 public class Home extends Activity {
 
+        private APICaller ac;
+        private Context c;
+
+        //private LocalBinder mBinder;
+        private ServiceConnection mConnection = new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName className, IBinder service) {
+                        //mBinder = (LocalBinder) service;
+                }
+                @Override
+                public void onServiceDisconnected(ComponentName arg0) {
+                }
+        };
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.home);
 
+                ac = new APICaller(this);
+                c = this;
+
                 this.updateMatchedCounter();
+
+                if(this.isFinishing())
+                        this.checkUpdates();
+
                 this.homeFunctions(savedInstanceState);
         }
 
@@ -90,7 +119,7 @@ public class Home extends Activity {
                 try {
                         cursor.moveToFirst();
 
-                        tv.setText(Integer.toString(cursor.getInt(1)));
+                        tv.setText("You have " + Integer.toString(cursor.getInt(1)) + " matches.");
 
                 }catch(Exception e) {
                         //Try catch to temporary remove app crashing when querying an empty db at the start of the app.
@@ -98,6 +127,46 @@ public class Home extends Activity {
 
                 cursor.close();
                 //tv.setText("0");
+        }
+
+        private void checkUpdates()
+        {
+                JSONObject ja = ac.checkUpdates(ac.getSandwichID());
+                StringBuilder message = new StringBuilder();
+
+                try {
+                        if (ja.length() > 0) {
+                                if(ja.getInt("Messages") > 0 && ja.getInt("Matches") > 0)
+                                {
+                                        message.append("You have " + ja.getInt("Messages") + " new messages and " + ja.getInt("Matches") + " new matches since your last visit.");
+                                }
+                                else
+                                {
+                                        if(ja.getInt("Messages") > 0)
+                                        {
+                                                message.append("You have " + ja.getInt("Messages") + " new messages since your last visit.");
+                                        }
+                                        else if(ja.getInt("Matches") > 0)
+                                        {
+                                                message.append("You have " +ja.getInt("Matches") + " new matches since your last visit.");
+                                        }
+
+                                }
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(c);
+                                builder.setMessage(message)
+                                        .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                        // User cancelled the dialog
+                                                }
+                                        });
+                                // Create the AlertDialog object and return it
+                                builder.create().show();
+                        }
+                }catch (JSONException e)
+                {
+                        System.out.println(e);
+                }
         }
 
 }

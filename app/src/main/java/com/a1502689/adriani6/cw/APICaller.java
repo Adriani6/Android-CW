@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class APICaller extends Sandwich{
 
     private Context c;
+    public static String connectionURL = "http://193.70.114.144:2016";
 
     public APICaller(Context c)
     {
@@ -36,32 +38,38 @@ public class APICaller extends Sandwich{
 
     public ArrayList<String> getConversations()
     {
-        System.out.printf(super.getSandwichID());
+
+        ArrayList<String> convos = new ArrayList<String>();
+
         try {
-            URL url = new URL("http://193.70.114.144/getMessages?me="+ super.getSandwichID());
+            URL url = new URL(connectionURL + "/getMessages?me="+ super.getSandwichID());
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
+            con.setConnectTimeout(5000);
             int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+            if(responseCode == 200) {
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
 
-            in.close();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
 
-            JSONArray jo = new JSONArray(response.toString());
-            ArrayList<String> convos = new ArrayList<String>();
+                in.close();
 
-            for(int i = 0; i < jo.length(); i++)
-            {
-                convos.add(new JSONObject(jo.get(i).toString()).get("_id").toString());
+                JSONArray jo = new JSONArray(response.toString());
+
+
+                for (int i = 0; i < jo.length(); i++) {
+
+                    convos.add(new JSONObject(jo.get(i).toString()).get("_id").toString());
+
+                }
+
             }
 
             return convos;
@@ -70,57 +78,52 @@ public class APICaller extends Sandwich{
             e.printStackTrace();
         }catch (IOException e) {
             e.printStackTrace();
+            return null;
         }catch(JSONException e)
         {
             e.printStackTrace();
+            return null;
         }
 
         return null;
     }
 
-    public JSONArray getMessages(String id)
+    public JSONArray getMessages(String id, String participant)
     {
-        System.out.println("HELLO");
         try {
-            URL url = new URL("http://193.70.114.144/getMessages?me="+ super.getSandwichID());
+            URL url = new URL(connectionURL + "/getMessages?me="+ super.getSandwichID() +"&participant=" + participant);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
+            con.setConnectTimeout(5000);
             int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+            if(responseCode == 200) {
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
 
-            in.close();
-
-            JSONArray jo = new JSONArray(response.toString());
-            System.out.println(jo);
-
-            for(int i = 0; i < jo.length(); i++)
-            {
-                System.out.println(new JSONObject(jo.get(i).toString()).get("_id").toString().equals(id));
-                if(id.equals(new JSONObject(jo.get(i).toString()).get("_id").toString()))
-                {
-                    return new JSONArray(new JSONObject(jo.get(i).toString()).get("messages").toString());
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
                 }
-            }
 
-            return new JSONArray();
+                in.close();
+
+                JSONArray jo = new JSONArray(response.toString());
+
+                return jo;
+            }
 
         }catch (MalformedURLException e) {
             e.printStackTrace();
         }catch (IOException e) {
             e.printStackTrace();
+            return null;
         }catch(JSONException e)
         {
             e.printStackTrace();
+            return null;
         }
 
         return null;
@@ -129,34 +132,37 @@ public class APICaller extends Sandwich{
 
     public String getMatch()
     {
+
+        boolean matched = false;
+
         try {
-            URL url = new URL("http://193.70.114.144/match?me="+ super.getSandwichID());
+            URL url = new URL(connectionURL + "/match?me="+ super.getSandwichID());
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
+            con.setConnectTimeout(5000);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+            if(responseCode == 200) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-
-            in.close();
-
-            JSONObject matchedProfile = new JSONObject(response.toString());
-            System.out.println(matchedProfile.get("id"));
-            boolean matched = false;
-            String message = "New Match";
-
-            if(matchedProfile != null) {
-                if (matchedProfile.getString("id") == "-1") {
-                    message = "No new Matches!";
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
                 }
+
+                in.close();
+
+                JSONObject matchedProfile = new JSONObject(response.toString());
+                System.out.println(matchedProfile.get("id"));
+
+                String message = "New Match";
+
+                if (matchedProfile != null) {
+                    if (matchedProfile.getString("id") == "-1") {
+                        message = "No new Matches!";
+                    }
                     AlertDialog.Builder builder = new AlertDialog.Builder(c);
                     builder.setMessage(message)
                             .setNegativeButton("Close", new DialogInterface.OnClickListener() {
@@ -168,6 +174,7 @@ public class APICaller extends Sandwich{
                     builder.create().show();
 
                     return matchedProfile.getString("id");
+                }
             }
 
             if(!matched)
@@ -191,44 +198,84 @@ public class APICaller extends Sandwich{
             e.printStackTrace();
         }catch (IOException e) {
             e.printStackTrace();
+            return null;
         }catch(JSONException je)
         {
             je.printStackTrace();
+            return null;
         }
 
         return null;
 
     }
 
-    public void sendMessage(String sender, String receiver, String message)
+    public void sendMessage(String conversation, String sender, String message)
     {
-        String s = sender;
-        String r = receiver;
+
         String m = message;
 
         try {
-            URL url = new URL("http://193.70.114.144/sendMessage?me="+ sender + "&receiver=" + receiver + "&message=" + message);
+            URL url = new URL(connectionURL + "/sendMessage?conversation=" + conversation + "&message=" + m + "&sender=" + sender);
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
+            con.setConnectTimeout(5000);
             int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+            if(responseCode == 200) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+
+                in.close();
             }
-
-            in.close();
 
         }catch (MalformedURLException e) {
             e.printStackTrace();
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public JSONObject checkUpdates(String me) {
+
+        try {
+            URL url = new URL(connectionURL + "/getUpdates?me=" + me);
+
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestProperty("User-Agent", "Mozilla/5.0");
+            con.setConnectTimeout(5000);
+            int responseCode = con.getResponseCode();
+
+            if(responseCode == 200) {
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+
+                try {
+                    in.close();
+                    return new JSONObject(response.toString());
+                } catch (JSONException e) {
+                    in.close();
+                    return new JSONObject();
+                }
+            }
+        }catch (MalformedURLException e) {
+            e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+            return new JSONObject();
+        }
+
+        return new JSONObject();
     }
 }

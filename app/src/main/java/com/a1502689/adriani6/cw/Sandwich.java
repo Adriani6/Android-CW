@@ -31,6 +31,8 @@ import java.util.ArrayList;
 
 public class Sandwich extends Thread{
 
+    private final String USER_AGENT = "Mozilla/5.0";
+
     private String sandwichID;
     private String breadType, sandwichType;
     private ArrayList<String> sauces, salads;
@@ -198,72 +200,6 @@ public class Sandwich extends Thread{
 
     }
 
-    private final String USER_AGENT = "Mozilla/5.0";
-
-
-    //To - Remove
-    public String findMatch()
-    {
-        String resp = null;
-        JSONObject obj = new JSONObject();
-        this.loadSandwich();
-        try {
-            obj.put("bread", this.getBread());
-            obj.put("type", this.getSandwichType());
-            obj.put("salads", this.getSaladsAsString());
-            obj.put("sauces", this.getSauceAsString());
-
-            System.out.println(this.getBread());
-
-                            try {
-                                System.out.println(obj.toString());
-                                URL url = new URL("http://192.168.0.23/match?id="+ obj.toString());
-
-                                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                                con.setRequestProperty("User-Agent", USER_AGENT);
-                                int responseCode = con.getResponseCode();
-                                System.out.println("\nSending 'GET' request to URL : " + url);
-                                System.out.println("Response Code : " + responseCode);
-
-                                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                                String inputLine;
-                                StringBuffer response = new StringBuffer();
-
-                                while ((inputLine = in.readLine()) != null) {
-                                    response.append(inputLine);
-                                }
-
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                                        builder.setMessage("New Match")
-                                                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        // User cancelled the dialog
-                                                    }
-                                                });
-                                        // Create the AlertDialog object and return it
-                                        builder.create().show();
-
-
-                                in.close();
-
-                                //print result
-                                resp = response.toString();
-
-
-
-                            }catch (MalformedURLException e) {
-                                e.printStackTrace();
-                            }catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return resp;
-    }
-
     public String registerSandwich()
     {
         String resp = null;
@@ -275,42 +211,43 @@ public class Sandwich extends Thread{
             obj.put("salads", this.getSaladsAsString());
             obj.put("sauces", this.getSauceAsString());
 
-            System.out.println(this.getBread());
 
             try {
                 System.out.println(obj.toString());
-                URL url = new URL("http://193.70.114.144/register?sandwich="+ obj.toString());
+                URL url = new URL(APICaller.connectionURL + "/register?sandwich="+ obj.toString());
 
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestProperty("User-Agent", USER_AGENT);
+                con.setConnectTimeout(5000);
                 int responseCode = con.getResponseCode();
-                System.out.println("\nSending 'GET' request to URL : " + url);
-                System.out.println("Response Code : " + responseCode);
 
-                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String inputLine;
-                StringBuffer response = new StringBuffer();
+                if(responseCode == 200) {
 
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+
+                    in.close();
+
+                    //print result
+                    resp = response.toString();
+                    JSONObject jObject = new JSONObject(resp);
+
+                    resp = jObject.getString("reg");
+                    this.sandwichID = resp;
+
                 }
-
-                in.close();
-
-                //print result
-                resp = response.toString();
-                JSONObject jObject = new JSONObject(resp);
-
-                resp = jObject.getString("reg");
-                this.sandwichID = resp;
-
-                System.out.println(jObject.getString("reg"));
 
 
             }catch (MalformedURLException e) {
                 e.printStackTrace();
             }catch (IOException e) {
                 e.printStackTrace();
+                return null;
             }
 
         } catch (JSONException e) {

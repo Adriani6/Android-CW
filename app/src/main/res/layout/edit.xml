@@ -1,63 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="Your sandwich!"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="65dp"
         android:layout_height="wrap_content"
-        android:text="Bread:" />
+        android:paddingTop="10dp"
+        android:text="Bread:"
+        android:textSize="18sp"
+        android:paddingLeft="10dp" />
 
     <TextView
         android:id="@+id/edit_breadType"
         android:layout_width="259dp"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:paddingLeft="10dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Meat:" />
+        android:text="Meat:"
+        android:paddingLeft="10dp"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/edit_meatType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:paddingLeft="10dp" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Salads:" />
+        android:text="Salads:"
+        android:paddingLeft="10dp"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/edit_salads"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:paddingLeft="10dp"/>
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sauces:" />
+        android:text="Sauces:"
+        android:paddingLeft="10dp"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/edit_sauces"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:paddingLeft="10dp"/>
 
     <Button
         android:id="@+id/edit_save_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete and Start Again" />
+        android:layout_gravity="center"
+        android:text="Delete and Start Again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

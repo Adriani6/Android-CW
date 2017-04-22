@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class MessageController extends Activity {
 
     private ArrayList<String> messages;
     private APICaller ac;
+    private String conversationID = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,8 @@ public class MessageController extends Activity {
 
     private void initialize()
     {
+        conversationID = null;
+
         Button backButton = ((Button) findViewById(R.id.show_messsage_back_button));
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -50,30 +54,34 @@ public class MessageController extends Activity {
 
         final ListView listview = (ListView) findViewById(R.id.messages_list);
 
-        final JSONArray list = ac.getMessages(extras.getString("id"));
-        messages = new ArrayList<String>();
+        final JSONArray list = ac.getMessages(ac.getSandwichID(), extras.getString("id"));
+        JSONArray rawMessages = null;
 
-        for(int i = 0; i < list.length(); i++)
+        try {
+            conversationID = ((JSONObject) list.get(0)).getString("_id");
+            rawMessages = ((JSONObject) list.get(0)).getJSONArray("messages");
+        }catch (JSONException e)
         {
-            try
-            {
-                JSONObject message = new JSONObject(list.get(i).toString());
-                if(message.get("sender").equals(ac.getSandwichID()))
-                {
-                    messages.add("You: " + message.get("message"));
-                }
-                else
-                {
-                    messages.add("Match: " + message.get("message"));
-                }
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-
+            System.out.println(e);
         }
 
+        messages = new ArrayList<String>();
+
+        if(rawMessages != null) {
+            for (int i = 0; i < rawMessages.length(); i++) {
+                try {
+                    JSONObject message = new JSONObject(rawMessages.get(i).toString());
+                    if (message.get("Sender").equals(ac.getSandwichID())) {
+                        messages.add("You: " + message.get("Message"));
+                    } else {
+                        messages.add("Match: " + message.get("Message"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
         System.out.println(list);
 
         final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, messages);
@@ -102,11 +110,16 @@ public class MessageController extends Activity {
             public void onClick(View v) {
                 Bundle extras = getIntent().getExtras();
 
-                messages.add("You: " + input.getText());
-                ac.sendMessage(ac.getSandwichID(), extras.getString("id"), input.getText().toString());
-                final ListView listview = (ListView) findViewById(R.id.messages_list);
-                final ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, messages);
-                listview.setAdapter(adapter);
+                if(input.getText().length() > 0) {
+                    messages.add("You: " + input.getText());
+                    ac.sendMessage(conversationID, ac.getSandwichID(), input.getText().toString());
+                    final ListView listview = (ListView) findViewById(R.id.messages_list);
+                    final ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, messages);
+
+                    listview.setAdapter(adapter);
+                    listview.setSelection(adapter.getCount() -1);
+                    input.setText("");
+                }
             }
         });
     }
